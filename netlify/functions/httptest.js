@@ -1,23 +1,17 @@
-const fetch = require('node-fetch')
+const fetch = require("node-fetch@2");
 
-exports.handler = async function (event, context) {
-  let response
+const API_ENDPOINT = 'https://cat-fact.herokuapp.com/facts';
+
+exports.handler = async (event, context) => {
   try {
-    response = await fetch('http://jsonplaceholder.typicode.com/users')
-    // handle response
-  } catch (err) {
+    const response = await fetch(API_ENDPOINT);
+    const data = await response.json();
+    return { statusCode: 200, body: JSON.stringify({ data }) };
+  } catch (error) {
+    console.log(error);
     return {
-      statusCode: err.statusCode || 500,
-      body: JSON.stringify({
-        error: err.message
-      })
-    }
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Failed fetching data' }),
+    };
   }
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      data: response
-    })
-  }
-}
+};
