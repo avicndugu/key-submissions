@@ -8,13 +8,13 @@ let jsondata;
 
 exports.handler = async (event, context) => {
   return fetch(API_ENDPOINT, { headers: { Accept: "application/json" } })
-    .then((response) => {
-      response.json()
-      return response
-    })
+    .then((response) => response.json())
     .then((data) => {
       jsondata = JSON.stringify(data);
-      return jsondata 
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: "Hello World" }),
+      } 
     })
 };
 
