@@ -7,15 +7,22 @@ const API_KEY = '9213432dsdajl3423209dfsdlfj43534sdfjsdfdljf322289479ddfd';
 let jsondata;
 
 exports.handler = async (event, context) => {
-  return fetch(API_ENDPOINT, { headers: { Accept: "application/json" } })
-    .then((response) => response.json())
-    .then((data) => {
-      jsondata = JSON.stringify(data);
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ message: "Hello World" }),
-      } 
+  let response = fetch(API_ENDPOINT, { headers: { Accept: "application/json" } })
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      data: response
     })
+  }
+
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   jsondata = JSON.stringify(data);
+    //   return ({
+    //     statusCode: 200,
+    //     body: JSON.stringify({ message: "Hello World" }),
+    //   });
+    // })
 };
 
 
