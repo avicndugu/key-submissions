@@ -4,14 +4,18 @@ const API_ENDPOINT = 'https://cat-fact.herokuapp.com/facts';
 
 const API_KEY = '9213432dsdajl3423209dfsdlfj43534sdfjsdfdljf322289479ddfd';
 
+let jsondata;
+
 exports.handler = async (event, context) => {
   return fetch(API_ENDPOINT, { headers: { Accept: "application/json" } })
-    .then((response) => response.json())
-    .then((data) => ({
-      statusCode: 200,
-      body: data.joke,
-    }))
-    .catch((error) => ({ statusCode: 422, body: String(error) }));
+    .then((response) => {
+      response.json()
+      return response
+    })
+    .then((data) => {
+      jsondata = JSON.stringify(data);
+      return jsondata 
+    })
 };
 
 
