@@ -1,7 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
 
 function App() {
+ 
+ const [data, setData] = useState([]); 
+  useEffect(() => { 
+    const fetchData = () => {
+      fetch('/.netlify/functions/pexelsfetch')
+      .then(response => response.json())
+      .then((data) => {setData(data) })
+      };
+      fetchData();
+  },[]);
+  console.log(data);
+
   return (
     <div className="App">
       <header className="App-header">
