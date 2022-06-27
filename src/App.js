@@ -22,7 +22,7 @@ const [searchTerm, setSearchTerm] = useState("cup");
       fetch(API_ENDPOINT, {
         method: 'GET',
         headers: {
-          "Authorization": ""
+          "Authorization": process.env.REACT_APP_PEXELS_API_KEY
         }
       })
       // fetch('/.netlify/functions/pexelsfetch')
@@ -34,20 +34,35 @@ const [searchTerm, setSearchTerm] = useState("cup");
   console.log(data);
 
 
-  return (
-    <div className="App">
-      <div>
-        <label htmlFor="related-images">Enter the English word you wish to translate: </label>
-        <br />
-        <input type="text" id="related-images" value={ word } onChange={(e)=> setWord(e.target.value)}/>
-        <button onClick={()=>setSearchTerm(word)}>Get images</button>
-      </div>
+  if(!data){
+    return (
+      <p>Loading ... </p>
+    )
+  } else {
+  console.log(data.photos);
 
-      <div>
+    return (
+      <div className="App">
+        <div>
+          <label htmlFor="related-images">Enter the English word you wish to translate: </label>
+          <br />
+          <input type="text" id="related-images" value={ word } onChange={(e)=> setWord(e.target.value)}/>
+          <button onClick={()=>setSearchTerm(word)}>Get images</button>
+        </div>
 
+        <div>
+        {
+          data.photos.map((item)=>(
+            <>
+              <p>{word}</p>
+              <p>{item.src.tiny}</p>
+              <img src={item.src.tiny} alt={item.alt} />
+            </>
+          ))
+        }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
 export default App;
