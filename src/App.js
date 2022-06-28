@@ -9,7 +9,7 @@ const [searchTerm, setSearchTerm] = useState("cup");
   const BASIC_API_ENDPOINT = 'https://api.pexels.com/v1/search?query=';
  // Default request returns 15 items 
  // const API_ENDPOINT = BASIC_API_ENDPOINT + searchterm;
-  const numberofitems = '&per_page=5';
+  const numberofitems = '&per_page=3';
   const orientation = '&orientation=square';
   const size = '&size=medium';
   // const API_ENDPOINT = BASIC_API_ENDPOINT + searchterm + numberofitems + orientation + size;
@@ -51,20 +51,20 @@ console.log(result)
           <label htmlFor="related-images">Enter the English word you wish to translate: </label>
           <br />
           <input type="text" id="related-images" value={ word } onChange={(e)=> setWord(e.target.value)}/>
-          <button onClick={()=>setSearchTerm(word)}>Get images</button>
+          <br />
+          <button className="button" onClick={()=>setSearchTerm(word)}>Get images</button>
         </div>
 
-        <div>
+        <div className="container">
         {
           result.photos.map((item)=>(
-            <>
-              <p>{word}</p>
-              <p>{item.src.tiny}</p>
+            <div>
               <img src={item.src.tiny} alt={item.alt} />
-            </>
+            </div>
           ))
         }
         </div>
+        <button>Submit Word</button>
       </div>
     );
   }

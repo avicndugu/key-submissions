@@ -1,3 +1,42 @@
 .App {
   text-align: center;
+  padding-top: 30px;
+
+}
+
+@media(min-width: 48em){  
+  .App {
+    max-width: 1350px;
+    margin: 0 auto;
+  }
+}
+
+button {
+  background-color: #862e9c;
+  color: #fff;
+  border: none;
+  font-size: 1em;
+  padding: 12px 30px;
+  margin: 10px;
+}
+
+input {
+  font-size: 1em;
+  padding: 10px;
+  border: 3px solid blue;
+}
+
+.container div {
+  margin: 20px;
+  border: 3px solid green;
+  padding: 20px;
+}
+
+@media(min-width: 48em){  
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }
