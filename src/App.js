@@ -5,7 +5,6 @@ function App() {
 const [word, setWord] = useState("");
 const [searchTerm, setSearchTerm] = useState("cup");
  
-  const [data, setData] = useState([]);
 
   const BASIC_API_ENDPOINT = 'https://api.pexels.com/v1/search?query=';
  // Default request returns 15 items 
@@ -16,32 +15,37 @@ const [searchTerm, setSearchTerm] = useState("cup");
   // const API_ENDPOINT = BASIC_API_ENDPOINT + searchterm + numberofitems + orientation + size;
   const API_ENDPOINT = BASIC_API_ENDPOINT + searchTerm + numberofitems + orientation + size;
 
+  function DataFetch(url){
+    const [data, setData] = useState("");
+    useEffect(() => { 
+      const fetchData = async () => {
+        try {
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              "Authorization": process.env.REACT_APP_PEXELS_API_KEY
+            }
+          })
+          const json = await response.json();
+          setData(json);
+        } catch(error) {
+            console.log("error:", error);
+          }
+        };
+        fetchData();
+    },[url]);
+    return data;
+  }
 
-  useEffect(() => { 
-    const fetchData = () => {
-      fetch(API_ENDPOINT, {
-        method: 'GET',
-        headers: {
-          "Authorization": process.env.REACT_APP_PEXELS_API_KEY
-        }
-      })
-      // fetch('/.netlify/functions/pexelsfetch')
-      .then(response => response.json())
-      .then((data) => {setData(data) })
-      };
-      fetchData();
-  },[API_ENDPOINT]);
-  console.log(data);
+const result = DataFetch(API_ENDPOINT);
+console.log(result)
 
-
-  if(!data){
+  if(!result){
     return (
-      <p>Loading ... </p>
+      <p>Loading.... </p>
     )
   } else {
-  console.log(data.photos);
-
-    return (
+  return (
       <div className="App">
         <div>
           <label htmlFor="related-images">Enter the English word you wish to translate: </label>
@@ -52,7 +56,7 @@ const [searchTerm, setSearchTerm] = useState("cup");
 
         <div>
         {
-          data.photos.map((item)=>(
+          result.photos.map((item)=>(
             <>
               <p>{word}</p>
               <p>{item.src.tiny}</p>
