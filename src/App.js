@@ -74,19 +74,18 @@ const [searchTerm, setSearchTerm] = useState("cup");
 
 function Button() {
   // Sending Data Using POST METHOD
-        // POST request using fetch inside useEffect React hook
-        const postData = async (word) => {
-          const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: 'React Hooks POST Request Example wew40' })
-          };
-          const sent = await fetch('https://reqres.in/api/posts', requestOptions)
-          const jsons = await sent.json();
-          console.log(jsons)
-        }
+  const postData = async (word) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(word)
+    };
+    const sent = await fetch('https://reqres.in/api/posts', requestOptions)
+    const jsons = await sent.json();
+    console.log(jsons)
+  }
   return(
-    <button onClick={()=>postData("hi")}> Submit Word</button>
+    <button onClick={()=>postData({ title: 'React Hooks POST Request Example'})}> Submit Word</button>
   )
 }
 export default App;
