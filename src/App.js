@@ -37,12 +37,14 @@ const [searchTerm, setSearchTerm] = useState("cup");
     return data;
   }
 
-const result = DataFetch(API_ENDPOINT);
-console.log(result)
+  const result = DataFetch(API_ENDPOINT);
+  console.log(result)
 
   if(!result){
     return (
-      <p>Loading.... </p>
+      <>
+        <p>Loading</p>
+      </>
     )
   } else {
   return (
@@ -64,9 +66,27 @@ console.log(result)
           ))
         }
         </div>
-        <button>Submit Word</button>
+          <Button></Button>
       </div>
     );
   }
+}
+
+function Button() {
+  // Sending Data Using POST METHOD
+        // POST request using fetch inside useEffect React hook
+        const postData = async (word) => {
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: 'React Hooks POST Request Example wew40' })
+          };
+          const sent = await fetch('https://reqres.in/api/posts', requestOptions)
+          const jsons = await sent.json();
+          console.log(jsons)
+        }
+  return(
+    <button onClick={()=>postData("hi")}> Submit Word</button>
+  )
 }
 export default App;
