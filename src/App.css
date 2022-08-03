@@ -1,3 +1,10 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
 .App {
   text-align: center;
   padding-top: 30px;
@@ -27,9 +34,24 @@ input {
 }
 
 .container div {
-  margin: 20px;
-  border: 3px solid green;
-  padding: 20px;
+  margin-left: 20px;
+  position: relative;
+  /*border: 3px solid green;*/
+  /*padding: 20px;*/
+}
+
+.container div img {
+  border-radius: 5px;
+}
+.container div div {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  background: #f8f0fc;
+  border: 2px solid #862e9c;
+  border-radius: 50%;
 }
 
 @media(min-width: 48em){  
@@ -39,4 +61,25 @@ input {
     width: 100%;
     flex-wrap: wrap;
   }
+}
+
+input[type="radio"] {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 12px;
+}
+
+/*input[type="radio"]:before {
+  background: #f4f4f4;
+}*/
+
+input[type="radio"]:checked {
+  background: red;
+}
+
+.checked {
+  border: 3px solid green;
+}
+.container > div {
+  /*background: green;*/
 }

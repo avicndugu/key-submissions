@@ -59,9 +59,14 @@ const [searchTerm, setSearchTerm] = useState("cup");
 
         <div className="container">
         {
-          result.photos.map((item)=>(
-            <div>
-              <img src={item.src.tiny} alt={item.alt} />
+          result.photos.map((item, index)=>(
+            <div key={index}>
+              <label htmlFor={index}>
+                <img src={item.src.tiny} alt={item.alt} />
+                <div>
+                  <input type="radio" name="image-chooser" id={index} />
+                </div>
+              </label>
             </div>
           ))
         }
