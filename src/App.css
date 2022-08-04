@@ -27,6 +27,11 @@ button {
   margin: 10px;
 }
 
+button:active {
+  transform: translateY(4px);
+  transition: all 0.2s;
+}
+
 input {
   font-size: 1em;
   padding: 10px;
