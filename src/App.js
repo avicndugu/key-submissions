@@ -88,7 +88,7 @@ const updateState = (id) => {
           ))
         }
         </div>
-          <Button imgUrl ={ imgUrl } />
+          <Button imgUrl ={ imgUrl } word={ word } />
       </div>
     );
   }
@@ -107,7 +107,7 @@ function Button(props) {
     console.log(jsons)
   }
   return(
-    <button onClick={()=>postData({ title: 'React Hooks POST Request Example'})}> Submit Word and Image Url</button>
+    <button onClick={()=>postData({ title: props.word , url: props.imgUrl })}> Submit Word and Image Url</button>
   )
 }
 export default App;
