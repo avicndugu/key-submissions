@@ -6,6 +6,7 @@ const [word, setWord] = useState("");
 const [searchTerm, setSearchTerm] = useState("cup");
 const [imgUrl, setImgUrl] = useState("");
 const [checked, setChecked] = useState([true, false, false]);
+const [translation, setTranslation] = useState("");
 
 const updateState = (id) => {
   const newState = checked.map( (item, index) => {
@@ -52,6 +53,13 @@ const updateState = (id) => {
 
   const result = DataFetch(API_ENDPOINT);
 
+  // Set the url of the default image as soon as the api is fully loaded 
+  useEffect(()=> {
+    if(result){
+      setImgUrl(result.photos[0].src.tiny)
+    }
+  },[result]);
+
   if(!result){
     return (
       <>
@@ -59,14 +67,20 @@ const updateState = (id) => {
       </>
     )
   } else {
-  return (
+    return (
       <div className="App">
         <div>
           <label htmlFor="related-images">Enter the English word you wish to translate: </label>
           <br />
+          <br />
           <input type="text" id="related-images" value={ word } onChange={(e)=> setWord(e.target.value)}/>
           <br />
           <button className="button" onClick={()=>setSearchTerm(word)}>Get images</button>
+          <br />
+          <input type="text" id="related-images" value={ translation } onChange={(e)=> setTranslation(e.target.value)}/>
+          <br />
+          <br />
+          <br />
         </div>
         <div className="container">
         {
@@ -88,7 +102,7 @@ const updateState = (id) => {
           ))
         }
         </div>
-          <Button imgUrl ={ imgUrl } word={ word } />
+          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } />
       </div>
     );
   }
@@ -107,7 +121,7 @@ function Button(props) {
     console.log(jsons)
   }
   return(
-    <button onClick={()=>postData({ title: props.word , url: props.imgUrl })}> Submit Word and Image Url</button>
+    <button onClick={()=>postData({ english: props.word , url: props.imgUrl , translation: props.translation })}> Submit Word and Image Url</button>
   )
 }
 export default App;
