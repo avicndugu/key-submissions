@@ -69,20 +69,26 @@ const updateState = (id) => {
   } else {
     return (
       <div className="App">
-        <div>
-          <label htmlFor="related-images">Enter the English word you wish to translate: </label>
-          <br />
-          <br />
-          <input type="text" id="related-images" value={ word } onChange={(e)=> setWord(e.target.value)}/>
-          <br />
-          <button className="button" onClick={()=>setSearchTerm(word)}>Get images</button>
-          <br />
-          <input type="text" id="related-images" value={ translation } onChange={(e)=> setTranslation(e.target.value)}/>
-          <br />
-          <br />
-          <br />
+        <p>Enter the English and Kikuyu word you wish to translate.</p>
+        <div className="container pt-1 pb-1">
+          <div className="pb-1">
+            <label htmlFor="related-images-en">English Word</label>
+            <br />
+            <br />
+            <input type="text" id="related-images-en" value={ word } onChange={(e)=> setWord(e.target.value)}/>
+          </div>
+          <div>
+            <label htmlFor="related-images-ki">Kikuyu Word</label>
+            <br />
+            <br />
+          <input type="text" id="related-images-ki" value={ translation } onChange={(e)=> setTranslation(e.target.value)}/>
+          </div>
         </div>
-        <div className="container">
+        <div className="pt-1 pb-1">
+          <p>Pictures helps everyone remember word better.</p>
+          <button className="button" onClick={()=>setSearchTerm(word)}>Load pictures</button>
+        </div>
+        <div className="container pt-1 pb-1">
         {
           result.photos.map((item, index)=>(
             <div key={index} onClick={()=> {
