@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 const [word, setWord] = useState("");
@@ -28,37 +28,141 @@ const updateState = (id) => {
   // Form validation
   const [enValid, setEnValid] = useState(false);
   const [kiValid, setKiValid] = useState(false);
-  const handleUserInput = (e) => {
-    const { name, value } = e.target;
-    const cleanwords = value.trim();
-    const words = cleanwords.split(" ");
-    if (words.length>1){
-    // Regex for a multiple words with spaces and without numbers
-      const regWord =RegExp(/^([a-zA-Z-' ])+$/);
-      regexcheck(regWord)
+
+  // Regex for a single word without spaces and numbers
+  const regWord =RegExp(/^([a-zA-Z-'])+$/);
+  // Regex for a multiple words with spaces and without numbers
+  const regWords =RegExp(/^([a-zA-Z-' ])+$/);
+
+  // let cleanword = word.trim();
+  // let splitword = cleanword.split(" ");
+  // let cleantranslation = translation.split(" ");
+
+  useEffect(()=> {
+    const cleanword = word.trim();
+    const splitword = cleanword.split(" ");
+    // console.log(cleanword, cleanword.length, word, word.length);
+    if (splitword.length>1){
+      console.log(word)
+      if(regWords.test(cleanword)){
+        setEnValid(true);
+      } else {
+        setEnValid(false);
+      }
     } else {
-    // Regex for a single word without spaces and numbers
-      const regWord =RegExp(/^([a-zA-Z-'])+$/);
-      regexcheck(regWord);
-    }
-
-    function regexcheck(regWord){
-      if(name==="primary-lang"){
-        if(regWord.test(cleanwords)){
-          setEnValid(regWord.test(cleanwords))
-        } else {
-          setEnValid(regWord.test(cleanwords))
-        }
-      }
-      if(name==="secondary-lang"){
-        if(regWord.test(cleanwords)){
-          setKiValid(regWord.test(cleanwords))
-
-        } else {
-          setKiValid(regWord.test(cleanwords))
-        }
+      console.log(word)
+      if(regWord.test(cleanword)){
+        setEnValid(true);
+      } else {
+        setEnValid(false);
       }
     }
+  }, [word, regWord, regWords]);
+
+
+  useEffect(()=> {
+    const cleantranslation = translation.trim();
+    const splittranslation = translation.split(" ");
+    if (splittranslation.length>1){
+      console.log(translation)
+      if(regWords.test(cleantranslation)){
+        setKiValid(true);
+      } else {
+        setKiValid(false);
+      }
+    } else {
+      console.log(translation)
+      if(regWord.test(cleantranslation)){
+        setKiValid(true);
+      } else {
+        setKiValid(false);
+      }
+    }
+  },[translation, regWord, regWords]);
+
+  const handleUserInput = () => {
+    // const cleanword = word.trim();
+    // console.log(splitwords, cleanword.length, word, word.length);
+
+    // const splitwords = cleanword.split(" ");
+    // if (splitwords.length>1){
+    //   // Regex for a multiple words with spaces and without numbers
+    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
+    //   console.log(word)
+    //   if(regWord.test(word)){
+    //     setEnValid(true);
+    //   } else {
+    //     setEnValid(false);
+
+    //   }
+    // } else {
+    //   // Regex for a single word without spaces and numbers
+    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
+    //   console.log(word)
+    //   if(regWord.test(word)){
+    //     setEnValid(true);
+    //   } else {
+    //     setEnValid(false);
+
+    //   }
+
+    // }
+
+    // if (splitwords.length>1){
+    // // Regex for a multiple words with spaces and without numbers
+    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
+    //   regexcheck(regWord)
+    // } else {
+    // // Regex for a single word without spaces and numbers
+    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
+    //   regexcheck(regWord);
+    // }
+
+    // function regexcheck(regWord){
+    //   if(regWord.test(cleanword)){
+    //     setEnValid(regWord.test(cleanword))
+    //   } else {
+    //     setEnValid(regWord.test(cleanword))
+    //   }
+    //   if(regWord.test(cleanword)){
+    //     setKiValid(regWord.test(cleanword))
+    //   } else {
+    //     setKiValid(regWord.test(cleanword))
+    //   }
+    // }
+
+
+
+    // const { name, value } = e.target;
+    // const cleanwords = value.trim();
+    // const words = cleanwords.split(" ");
+    // if (words.length>1){
+    // // Regex for a multiple words with spaces and without numbers
+    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
+    //   regexcheck1(regWord)
+    // } else {
+    // // Regex for a single word without spaces and numbers
+    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
+    //   regexcheck1(regWord);
+    // }
+
+    // function regexcheck1(regWord){
+    //   if(name==="primary-lang"){
+    //     if(regWord.test(cleanwords)){
+    //       setEnValid(regWord.test(cleanwords))
+    //     } else {
+    //       setEnValid(regWord.test(cleanwords))
+    //     }
+    //   }
+    //   if(name==="secondary-lang"){
+    //     if(regWord.test(cleanwords)){
+    //       setKiValid(regWord.test(cleanwords))
+
+    //     } else {
+    //       setKiValid(regWord.test(cleanwords))
+    //     }
+    //   }
+    // }
   }
 
 // Use click instead of useffect to load data
@@ -94,20 +198,15 @@ const updateState = (id) => {
             <label htmlFor="related-images-en">English Word</label>
             <br />
             <br />
-            <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> {
-              setWord(e.target.value);
-              handleUserInput(e);
-            }}/>
+            <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> setWord(e.target.value) }/>
             <p>{ !enValid ? "Enter a valid English word" : "Correct English word" }</p>
+            <p>{word}</p>
           </div>
           <div>
             <label htmlFor="related-images-ki">Kikuyu Word</label>
             <br />
             <br />
-            <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> {
-              setTranslation(e.target.value);
-              handleUserInput(e);
-            }}/>
+            <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> setTranslation(e.target.value) }/>
             <p>{ !kiValid ? "Enter a Kikuyu word" : "Correct Kikuyu word" }</p>
           </div>
         </div>
