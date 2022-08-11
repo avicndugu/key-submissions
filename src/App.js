@@ -34,14 +34,10 @@ const updateState = (id) => {
   // Regex for a multiple words with spaces and without numbers
   const regWords =RegExp(/^([a-zA-Z-' ])+$/);
 
-  // let cleanword = word.trim();
-  // let splitword = cleanword.split(" ");
-  // let cleantranslation = translation.split(" ");
 
   useEffect(()=> {
     const cleanword = word.trim();
     const splitword = cleanword.split(" ");
-    // console.log(cleanword, cleanword.length, word, word.length);
     if (splitword.length>1){
       console.log(word)
       if(regWords.test(cleanword)){
@@ -80,90 +76,6 @@ const updateState = (id) => {
     }
   },[translation, regWord, regWords]);
 
-  const handleUserInput = () => {
-    // const cleanword = word.trim();
-    // console.log(splitwords, cleanword.length, word, word.length);
-
-    // const splitwords = cleanword.split(" ");
-    // if (splitwords.length>1){
-    //   // Regex for a multiple words with spaces and without numbers
-    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
-    //   console.log(word)
-    //   if(regWord.test(word)){
-    //     setEnValid(true);
-    //   } else {
-    //     setEnValid(false);
-
-    //   }
-    // } else {
-    //   // Regex for a single word without spaces and numbers
-    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
-    //   console.log(word)
-    //   if(regWord.test(word)){
-    //     setEnValid(true);
-    //   } else {
-    //     setEnValid(false);
-
-    //   }
-
-    // }
-
-    // if (splitwords.length>1){
-    // // Regex for a multiple words with spaces and without numbers
-    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
-    //   regexcheck(regWord)
-    // } else {
-    // // Regex for a single word without spaces and numbers
-    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
-    //   regexcheck(regWord);
-    // }
-
-    // function regexcheck(regWord){
-    //   if(regWord.test(cleanword)){
-    //     setEnValid(regWord.test(cleanword))
-    //   } else {
-    //     setEnValid(regWord.test(cleanword))
-    //   }
-    //   if(regWord.test(cleanword)){
-    //     setKiValid(regWord.test(cleanword))
-    //   } else {
-    //     setKiValid(regWord.test(cleanword))
-    //   }
-    // }
-
-
-
-    // const { name, value } = e.target;
-    // const cleanwords = value.trim();
-    // const words = cleanwords.split(" ");
-    // if (words.length>1){
-    // // Regex for a multiple words with spaces and without numbers
-    //   const regWord =RegExp(/^([a-zA-Z-' ])+$/);
-    //   regexcheck1(regWord)
-    // } else {
-    // // Regex for a single word without spaces and numbers
-    //   const regWord =RegExp(/^([a-zA-Z-'])+$/);
-    //   regexcheck1(regWord);
-    // }
-
-    // function regexcheck1(regWord){
-    //   if(name==="primary-lang"){
-    //     if(regWord.test(cleanwords)){
-    //       setEnValid(regWord.test(cleanwords))
-    //     } else {
-    //       setEnValid(regWord.test(cleanwords))
-    //     }
-    //   }
-    //   if(name==="secondary-lang"){
-    //     if(regWord.test(cleanwords)){
-    //       setKiValid(regWord.test(cleanwords))
-
-    //     } else {
-    //       setKiValid(regWord.test(cleanwords))
-    //     }
-    //   }
-    // }
-  }
 
 // Use click instead of useffect to load data
   const handleClick = async (term) => {
