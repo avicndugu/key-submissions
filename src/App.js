@@ -30,21 +30,33 @@ const updateState = (id) => {
   const [kiValid, setKiValid] = useState(false);
   const handleUserInput = (e) => {
     const { name, value } = e.target;
+    const cleanwords = value.trim();
+    const words = cleanwords.split(" ");
+    if (words.length>1){
+    // Regex for a multiple words with spaces and without numbers
+      const regWord =RegExp(/^([a-zA-Z-' ])+$/);
+      regexcheck(regWord)
+    } else {
     // Regex for a single word without spaces and numbers
-    const regWord =RegExp(/^([a-zA-Z-'])+$/);
-    if(name==="primary-lang"){
-      if(regWord.test(value)){
-        setEnValid(regWord.test(value))
-      } else {
-        setEnValid(regWord.test(value))
-      }
+      const regWord =RegExp(/^([a-zA-Z-'])+$/);
+      regexcheck(regWord);
     }
-    if(name==="secondary-lang"){
-      if(regWord.test(value)){
-        setKiValid(regWord.test(value))
 
-      } else {
-        setKiValid(regWord.test(value))
+    function regexcheck(regWord){
+      if(name==="primary-lang"){
+        if(regWord.test(cleanwords)){
+          setEnValid(regWord.test(cleanwords))
+        } else {
+          setEnValid(regWord.test(cleanwords))
+        }
+      }
+      if(name==="secondary-lang"){
+        if(regWord.test(cleanwords)){
+          setKiValid(regWord.test(cleanwords))
+
+        } else {
+          setKiValid(regWord.test(cleanwords))
+        }
       }
     }
   }
