@@ -25,6 +25,30 @@ const updateState = (id) => {
   const orientation = '&orientation=square';
   const size = '&size=medium';
 
+  // Form validation
+  const [enValid, setEnValid] = useState(false);
+  const [kiValid, setKiValid] = useState(false);
+  const handleUserInput = (e) => {
+    const { name, value } = e.target;
+    // Regex for a single word without spaces and numbers
+    const regWord =RegExp(/^([a-zA-Z-'])+$/);
+    if(name==="primary-lang"){
+      if(regWord.test(value)){
+        setEnValid(regWord.test(value))
+      } else {
+        setEnValid(regWord.test(value))
+      }
+    }
+    if(name==="secondary-lang"){
+      if(regWord.test(value)){
+        setKiValid(regWord.test(value))
+
+      } else {
+        setKiValid(regWord.test(value))
+      }
+    }
+  }
+
 // Use click instead of useffect to load data
   const handleClick = async (term) => {
   const search = BASIC_API_ENDPOINT + term + numberofitems + orientation + size;
@@ -58,13 +82,21 @@ const updateState = (id) => {
             <label htmlFor="related-images-en">English Word</label>
             <br />
             <br />
-            <input type="text" id="related-images-en" value={ word } onChange={(e)=> setWord(e.target.value)}/>
+            <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> {
+              setWord(e.target.value);
+              handleUserInput(e);
+            }}/>
+            <p>{ !enValid ? "Enter a valid English word" : "Correct English word" }</p>
           </div>
           <div>
             <label htmlFor="related-images-ki">Kikuyu Word</label>
             <br />
             <br />
-          <input type="text" id="related-images-ki" value={ translation } onChange={(e)=> setTranslation(e.target.value)}/>
+            <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> {
+              setTranslation(e.target.value);
+              handleUserInput(e);
+            }}/>
+            <p>{ !kiValid ? "Enter a Kikuyu word" : "Correct Kikuyu word" }</p>
           </div>
         </div>
         <div className="pt-1 pb-1">
