@@ -76,11 +76,15 @@ const updateState = (id) => {
     }
   },[translation, regWord, regWords]);
 
+  function checkValidity() {
+    if(enValid && kiValid){
+      handleClick();
+    }
+  }
 
 // Use click instead of useffect to load data
-  const handleClick = async (term) => {
-  const search = BASIC_API_ENDPOINT + term + numberofitems + orientation + size;
-
+  const handleClick = async () => {
+    const search = BASIC_API_ENDPOINT + word + numberofitems + orientation + size;
     setIsLoading(true);
     try {
       const response = await fetch(search, {
@@ -111,7 +115,7 @@ const updateState = (id) => {
             <br />
             <br />
             <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> setWord(e.target.value) }/>
-            <p>{ !enValid ? "Enter a valid English word" : "Correct English word" }</p>
+            <p>{ !enValid ? "Enter a valid English word" : " " }</p>
             <p>{word}</p>
           </div>
           <div>
@@ -119,12 +123,13 @@ const updateState = (id) => {
             <br />
             <br />
             <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> setTranslation(e.target.value) }/>
-            <p>{ !kiValid ? "Enter a Kikuyu word" : "Correct Kikuyu word" }</p>
+            <p>{ !kiValid ? "Enter a Kikuyu word" : " " }</p>
+            <p>{translation}</p>
           </div>
         </div>
         <div className="pt-1 pb-1">
           <p>Pictures helps everyone remember word better.</p>
-          <button className="button" onClick={()=>handleClick(word)}>Load pictures</button>
+          <button className="button" onClick={()=>checkValidity()}>Load pictures</button>
         </div>
         <div className="container pt-1 pb-1">
           <div>
@@ -197,7 +202,6 @@ const updateState = (id) => {
           </div>
           <div className="pt-1 pb-1">
             <p>Pictures helps everyone remember word better.</p>
-            <button className="button" onClick={()=>handleClick(word)}>Load pictures</button>
           </div>
           <div className="container pt-1 pb-1">
             {
