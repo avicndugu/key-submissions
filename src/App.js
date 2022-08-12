@@ -242,7 +242,11 @@ function Button(props) {
     console.log(jsons)
   }
   return(
-    <button onClick={()=>postData({ english: props.word , url: props.imgUrl , translation: props.translation })}> { props.buttontext } </button>
+    <button onClick={()=> {
+      if(props.isvalid){
+        postData({ english: props.word , url: props.imgUrl , translation: props.translation });
+      }
+    }}> { props.buttontext } </button>
   )
 }
 export default App;
