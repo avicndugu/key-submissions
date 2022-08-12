@@ -141,7 +141,6 @@ const updateState = (id) => {
             <img src="https://via.placeholder.com/280x200.png?text=loading..." alt="placeholder" width="280" height="200"/>
           </div>
         </div>
-        <Button imgUrl ={ imgUrl } word={ word } translation={ translation } buttontext="Submit Word Without Picture" />
       </div>
     )
   } else {
