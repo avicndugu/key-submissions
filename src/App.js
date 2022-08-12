@@ -76,11 +76,6 @@ const updateState = (id) => {
     }
   },[translation, regWord, regWords]);
 
-  function checkValidity() {
-    if(enValid && kiValid){
-      handleClick();
-    }
-  }
 
 // Use click instead of useffect to load data
   const handleClick = async () => {
@@ -129,7 +124,11 @@ const updateState = (id) => {
         </div>
         <div className="pt-1 pb-1">
           <p>Pictures helps everyone remember word better.</p>
-          <button className="button" onClick={()=>checkValidity()}>Load pictures</button>
+          <button className="button" onClick={()=> {
+            if(enValid && kiValid){
+              handleClick();
+            } 
+          }}>Load pictures</button>
         </div>
         <div className="container pt-1 pb-1">
           <div>
@@ -222,7 +221,7 @@ const updateState = (id) => {
               ))
             }
           </div>    
-          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } buttontext="Submit Word with Pictures" />
+          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } isvalid={(enValid && kiValid)} buttontext="Submit Word with Pictures" />
         </div>
       )
     }
