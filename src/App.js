@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 const [word, setWord] = useState("");
@@ -25,10 +25,57 @@ const updateState = (id) => {
   const orientation = '&orientation=square';
   const size = '&size=medium';
 
-// Use click instead of useffect to load data
-  const handleClick = async (term) => {
-  const search = BASIC_API_ENDPOINT + term + numberofitems + orientation + size;
+  // Form validation
+  const [enValid, setEnValid] = useState(false);
+  const [kiValid, setKiValid] = useState(false);
 
+  // Regex for a single word without spaces and numbers
+  const regWord =RegExp(/^([a-zA-Z-'])+$/);
+  // Regex for a multiple words with spaces and without numbers
+  const regWords =RegExp(/^([a-zA-Z-' ])+$/);
+
+
+  useEffect(()=> {
+    const cleanword = word.trim();
+    const splitword = cleanword.split(" ");
+    if (splitword.length>1){
+      if(regWords.test(cleanword)){
+        setEnValid(true);
+      } else {
+        setEnValid(false);
+      }
+    } else {
+      if(regWord.test(cleanword)){
+        setEnValid(true);
+      } else {
+        setEnValid(false);
+      }
+    }
+  }, [word, regWord, regWords]);
+
+
+  useEffect(()=> {
+    const cleantranslation = translation.trim();
+    const splittranslation = translation.split(" ");
+    if (splittranslation.length>1){
+      if(regWords.test(cleantranslation)){
+        setKiValid(true);
+      } else {
+        setKiValid(false);
+      }
+    } else {
+      if(regWord.test(cleantranslation)){
+        setKiValid(true);
+      } else {
+        setKiValid(false);
+      }
+    }
+  },[translation, regWord, regWords]);
+
+
+// Use click instead of useffect to load data
+  const handleClick = async () => {
+    const search = BASIC_API_ENDPOINT + word + numberofitems + orientation + size;
     setIsLoading(true);
     try {
       const response = await fetch(search, {
@@ -58,18 +105,24 @@ const updateState = (id) => {
             <label htmlFor="related-images-en">English Word</label>
             <br />
             <br />
-            <input type="text" id="related-images-en" value={ word } onChange={(e)=> setWord(e.target.value)}/>
+            <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> setWord(e.target.value) }/>
+            <p>{ !enValid ? "Enter a valid English word" : " " }</p>
           </div>
           <div>
             <label htmlFor="related-images-ki">Kikuyu Word</label>
             <br />
             <br />
-          <input type="text" id="related-images-ki" value={ translation } onChange={(e)=> setTranslation(e.target.value)}/>
+            <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> setTranslation(e.target.value) }/>
+            <p>{ !kiValid ? "Enter a Kikuyu word" : " " }</p>
           </div>
         </div>
         <div className="pt-1 pb-1">
           <p>Pictures helps everyone remember word better.</p>
-          <button className="button" onClick={()=>handleClick(word)}>Load pictures</button>
+          <button className="button" onClick={()=> {
+            if(enValid && kiValid){
+              handleClick();
+            } 
+          }}>Load pictures</button>
         </div>
         <div className="container pt-1 pb-1">
           <div>
@@ -82,7 +135,6 @@ const updateState = (id) => {
             <img src="https://via.placeholder.com/280x200.png?text=loading..." alt="placeholder" width="280" height="200"/>
           </div>
         </div>
-        <Button imgUrl ={ imgUrl } word={ word } translation={ translation } buttontext="Submit Word Without Picture" />
       </div>
     )
   } else {
@@ -142,7 +194,6 @@ const updateState = (id) => {
           </div>
           <div className="pt-1 pb-1">
             <p>Pictures helps everyone remember word better.</p>
-            <button className="button" onClick={()=>handleClick(word)}>Load pictures</button>
           </div>
           <div className="container pt-1 pb-1">
             {
@@ -163,7 +214,7 @@ const updateState = (id) => {
               ))
             }
           </div>    
-          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } buttontext="Submit Word with Pictures" />
+          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } isvalid={(enValid && kiValid)} buttontext="Submit Word with Pictures" />
         </div>
       )
     }
@@ -184,7 +235,11 @@ function Button(props) {
     console.log(jsons)
   }
   return(
-    <button onClick={()=>postData({ english: props.word , url: props.imgUrl , translation: props.translation })}> { props.buttontext } </button>
+    <button onClick={()=> {
+      if(props.isvalid){
+        postData({ english: props.word , url: props.imgUrl , translation: props.translation });
+      }
+    }}> { props.buttontext } </button>
   )
 }
 export default App;
