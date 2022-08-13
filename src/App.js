@@ -39,14 +39,12 @@ const updateState = (id) => {
     const cleanword = word.trim();
     const splitword = cleanword.split(" ");
     if (splitword.length>1){
-      console.log(word)
       if(regWords.test(cleanword)){
         setEnValid(true);
       } else {
         setEnValid(false);
       }
     } else {
-      console.log(word)
       if(regWord.test(cleanword)){
         setEnValid(true);
       } else {
@@ -60,14 +58,12 @@ const updateState = (id) => {
     const cleantranslation = translation.trim();
     const splittranslation = translation.split(" ");
     if (splittranslation.length>1){
-      console.log(translation)
       if(regWords.test(cleantranslation)){
         setKiValid(true);
       } else {
         setKiValid(false);
       }
     } else {
-      console.log(translation)
       if(regWord.test(cleantranslation)){
         setKiValid(true);
       } else {
