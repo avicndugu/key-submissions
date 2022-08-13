@@ -111,7 +111,6 @@ const updateState = (id) => {
             <br />
             <input type="text" id="primary-lang"  name="primary-lang" value={ word } onChange={(e)=> setWord(e.target.value) }/>
             <p>{ !enValid ? "Enter a valid English word" : " " }</p>
-            <p>{word}</p>
           </div>
           <div>
             <label htmlFor="related-images-ki">Kikuyu Word</label>
@@ -119,7 +118,6 @@ const updateState = (id) => {
             <br />
             <input type="text" id="secondary-lang" name="secondary-lang" value={ translation } onChange={(e)=> setTranslation(e.target.value) }/>
             <p>{ !kiValid ? "Enter a Kikuyu word" : " " }</p>
-            <p>{translation}</p>
           </div>
         </div>
         <div className="pt-1 pb-1">
