@@ -96,6 +96,19 @@ const updateState = (id) => {
     }
   }
 
+  // Set the first url as the default when the user might not click on any option 
+  useEffect(()=> {
+    if(newData){
+      console.log(newData)
+      console.log(newData.photos)
+      if(newData.photos.length>0){
+        console.log(newData.photos[0])
+        console.log(newData.photos[0].src.tiny)
+        setImgUrl(newData.photos[0].src.tiny)
+      }
+    }
+  },[newData])
+
   if(isLoading || !newData){
     return (
       <div className="App">
@@ -229,7 +242,8 @@ function Button(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(word, props.imgUrl)
     };
-    const sent = await fetch('https://reqres.in/api/posts', requestOptions)
+    // const sent = await fetch('https://reqres.in/api/posts', requestOptions)
+    const sent = await fetch('http://localhost:3001', requestOptions)
     const jsons = await sent.json();
     console.log(sent.status)
     console.log(jsons)
