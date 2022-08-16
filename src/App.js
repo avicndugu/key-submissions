@@ -141,13 +141,13 @@ const updateState = (id) => {
         </div>
         <div className="container pt-1 pb-1">
           <div>
-            <img src="https://via.placeholder.com/280x200.png?text=loading..." alt="placeholder" width="280" height="200"/>
+            <img src="https://via.placeholder.com/280x200.png?text=waiting-to-loading..." alt="placeholder" width="280" height="200"/>
           </div>
           <div>
-            <img src="https://via.placeholder.com/280x200.png?text=loading..." alt="placeholder" width="280" height="200"/>
+            <img src="https://via.placeholder.com/280x200.png?text=waiting-to-loading..." alt="placeholder" width="280" height="200"/>
           </div>
           <div>
-            <img src="https://via.placeholder.com/280x200.png?text=loading..." alt="placeholder" width="280" height="200"/>
+            <img src="https://via.placeholder.com/280x200.png?text=waiting-to-loading..." alt="placeholder" width="280" height="200"/>
           </div>
         </div>
       </div>
@@ -229,7 +229,11 @@ const updateState = (id) => {
               ))
             }
           </div>    
-          <Button imgUrl ={ imgUrl } word={ word } translation={ translation } isvalid={(enValid && kiValid)} buttontext="Submit Word with Pictures" />
+          <Button imgUrl ={ imgUrl } word={ word } translation={ translation }
+           isvalid={(enValid && kiValid)} buttontext="Submit Word with Pictures"
+           setWord = { setWord } setImgUrl = { setImgUrl } setTranslation = { setTranslation }
+           setNewData = { setNewData }
+          />
         </div>
       )
     }
@@ -259,6 +263,10 @@ function Button(props) {
     if (error) {
       console.log(error.message);
     }
+    props.setWord("");
+    props.setImgUrl("");
+    props.setTranslation("");
+    props.setNewData(null);
   }
   return(
     <button onClick={()=> {
