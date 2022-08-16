@@ -1,5 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+// Initialize the Supabase JS client
+import { createClient } from '@supabase/supabase-js';
 
 function App() {
 const [word, setWord] = useState("");
@@ -235,6 +237,10 @@ const updateState = (id) => {
 }
 
 function Button(props) {
+  const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+  const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
   // Sending Data Using POST METHOD
   const postData = async (word) => {
     const requestOptions = {
@@ -243,10 +249,16 @@ function Button(props) {
       body: JSON.stringify(word, props.imgUrl)
     };
     // const sent = await fetch('https://reqres.in/api/posts', requestOptions)
-    const sent = await fetch('http://localhost:3001', requestOptions)
-    const jsons = await sent.json();
-    console.log(sent.status)
-    console.log(jsons)
+    // const sent = await fetch('http://localhost:3001', requestOptions)
+    // const sent = await fetch('https://zmgkwurpwwqznupvrscd.supabase.co', requestOptions);
+    const {data, error} = await supabase.from('kikuyu-words').insert([{ english: props.word, kikuyu: props.translation, img_path: props.imgUrl }]);
+    // const jsons = await sent.json();
+    // console.log(sent.status)
+    // console.log(jsons)
+    console.log(data)
+    if (error) {
+      console.log(error.message);
+    }
   }
   return(
     <button onClick={()=> {
